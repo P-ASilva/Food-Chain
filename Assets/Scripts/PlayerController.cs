@@ -39,22 +39,25 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate() 
    { 
-     Vector3 movement = new Vector3 (movementX, 0.0f, movementY);
-     rb.AddForce(movement * speed);
-        
+    Vector3 movement = new Vector3 (movementX, 0.0f, movementY);
+    rb.AddForce(movement * speed);  
    }
     void OnCollisionEnter(Collision collision)
     {
-        foreach (ContactPoint contact in collision.contacts)
-        {
-            Debug.DrawRay(contact.point, contact.normal, Color.white);
-        }
-        if (collision.gameObject.CompareTag("PickUp"))
-        {
-          collision.gameObject.SetActive(false);
-          count++;
-          SetCountText();
-        }
+      foreach (ContactPoint contact in collision.contacts)
+      {
+        Debug.DrawRay(contact.point, contact.normal, Color.white);
+      }
+      // var colliders = Physics.OverlapSphere(transform.position, 10f)
+      // foreach(var collider in colliders) {
+      //       Debug.Log($"{collider.gameObject.name} is nearby");
+      // }
+      if (collision.gameObject.CompareTag("PickUp"))
+      {
+        collision.gameObject.SetActive(false);
+        count++;
+        SetCountText();
+      }
     }
    
 }

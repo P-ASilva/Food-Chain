@@ -6,6 +6,8 @@ TagManager:
   tags:
   - PickUp
   - Wall
+  - Wall_V
+  - Wall_H
   layers:
   - Default
   - TransparentFX
