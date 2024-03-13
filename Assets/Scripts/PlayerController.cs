@@ -57,6 +57,10 @@ public class PlayerController : MonoBehaviour
         collision.gameObject.SetActive(false);
         count++;
         SetCountText();
+      } else if (collision.gameObject.CompareTag("Seeker")) {
+        collision.gameObject.SetActive(false);
+        count--;
+        SetCountText();
       }
     }
    

@@ -1558,11 +1558,11 @@ PrefabInstance:
     - target: {fileID: 1130053986163007563, guid: 2066900013f19434998830203d20b9a5, type: 3}
       propertyPath: countText
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1417111788}
     - target: {fileID: 1130053986163007563, guid: 2066900013f19434998830203d20b9a5, type: 3}
       propertyPath: winTextObject
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1836153101}
     - target: {fileID: 6950876370072783936, guid: 2066900013f19434998830203d20b9a5, type: 3}
       propertyPath: m_Name
       value: Player

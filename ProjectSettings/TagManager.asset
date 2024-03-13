@@ -8,6 +8,7 @@ TagManager:
   - Wall
   - Wall_V
   - Wall_H
+  - Seeker
   layers:
   - Default
   - TransparentFX
