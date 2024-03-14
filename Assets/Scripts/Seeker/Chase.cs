@@ -21,6 +21,7 @@ public class Chase : MonoBehaviour
         Vector3 finalDirection = new Vector3(0, 0, 0);
         var colliders = Physics.OverlapSphere(transform.position, radius);
         float step = speed * Time.deltaTime;
+
         foreach(var collider in colliders) {
             //Debug.DrawLine(contact.point, Vector3.Normalize(transform.position - collision.transform.position) * speed, Color.white);
             if (collider.gameObject.CompareTag("Wall_V"))
@@ -55,4 +56,6 @@ public class Chase : MonoBehaviour
             rb.velocity = Vector3.Normalize(transform.position - collision.transform.position) * speed;
         }
     }
+
+    
 }

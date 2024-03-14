@@ -1,9 +1,7 @@
 using TMPro;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {   
     private Rigidbody rb; 
@@ -14,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public TextMeshProUGUI countText;
     public GameObject winTextObject;
     // Start is called before the first frame update
+    
     void Start()
     {
      rb = GetComponent <Rigidbody>();
@@ -31,7 +30,7 @@ public class PlayerController : MonoBehaviour
     void SetCountText() 
    {
     countText.text =  "Score: " + count.ToString();
-    if (count >= 2)
+    if (count >= 200)
     {
     winTextObject.SetActive(true);
     }
@@ -48,19 +47,15 @@ public class PlayerController : MonoBehaviour
       {
         Debug.DrawRay(contact.point, contact.normal, Color.white);
       }
-      // var colliders = Physics.OverlapSphere(transform.position, 10f)
-      // foreach(var collider in colliders) {
-      //       Debug.Log($"{collider.gameObject.name} is nearby");
-      // }
       if (collision.gameObject.CompareTag("PickUp"))
       {
         collision.gameObject.SetActive(false);
         count++;
         SetCountText();
       } else if (collision.gameObject.CompareTag("Seeker")) {
-        collision.gameObject.SetActive(false);
-        count--;
-        SetCountText();
+        GameObject.Destroy(gameObject);
+        SceneManager.LoadScene("Menu");
+    
       }
     }
    
