@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 144722166703414928}
   - component: {fileID: 22068478090997038}
   - component: {fileID: 7352621163415440497}
+  - component: {fileID: -1572084063169321534}
   m_Layer: 0
   m_Name: Seeker
   m_TagString: Untagged
@@ -119,8 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 825516ed004e8ec49b09f638284eec24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  rb: {fileID: 7352621163415440497}
+  target: {fileID: 0}
   speed: 0.5
   radius: 10
 --- !u!54 &7352621163415440497
@@ -150,3 +150,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 36
   m_CollisionDetection: 1
+--- !u!114 &-1572084063169321534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2941913922287484758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 686fc472fee1fd945b6131e35a069c98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0.5
+  radius: 10

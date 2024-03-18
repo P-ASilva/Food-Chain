@@ -9,6 +9,7 @@ TagManager:
   - Wall_V
   - Wall_H
   - Seeker
+  - Goal
   layers:
   - Default
   - TransparentFX

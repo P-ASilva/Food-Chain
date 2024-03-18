@@ -8,7 +8,7 @@ public class Fade : MonoBehaviour
     void Update(){
         if (GetplayerScore() >= resistance)
         {
-            GameObject.Destroy(gameObject);
+            Destroy(gameObject);
         }
     }
     int GetplayerScore()
