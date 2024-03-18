@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     public int count = 0;
     public float timeLeft = 120.0f;
     public TextMeshProUGUI countText;
+    public TextMeshProUGUI timerText;
     public GameObject winTextObject;
     public GameObject loseTextObject;
     // Start is called before the first frame update
@@ -40,18 +41,32 @@ public class PlayerController : MonoBehaviour
     winTextObject.SetActive(true);
     }
    }
+   void SetTimerText() {
+    float minutes = Mathf.Floor(timeLeft / 60);
+    float seconds = timeLeft%60;
+    if (seconds < 10) {
+      timerText.text = "Time: " + minutes.ToString() + ":0" + Mathf.RoundToInt(seconds);
+    } else {
+      timerText.text = "Time: " + minutes.ToString() + ":" + Mathf.RoundToInt(seconds);
+    }
+   }
 
     private void Update() 
    { 
     Vector3 movement = new Vector3 (movementX, 0.0f, movementY);
     rb.AddForce(movement * speed);  
     // update
-    timeLeft -= Time.deltaTime;
-    if (timeLeft <= 0 && OutOfBounds()) // swap to or
+    if (timeLeft > 0)
     {
-      loseTextObject.SetActive(true);
-      StartCoroutine(WaitAndLoadMenu());
-      SceneManager.LoadScene("Menu");
+      timeLeft -= Time.deltaTime;
+    }
+    SetTimerText();
+    if (timeLeft <= 0 || OutOfBounds()) // swap to or
+    {
+      if (!winTextObject.activeSelf) {
+        loseTextObject.SetActive(true);
+      }
+      StartCoroutine(WaitAndLoadMenu(5));
     }
    }
     void OnCollisionEnter(Collision collision)
@@ -67,23 +82,21 @@ public class PlayerController : MonoBehaviour
         SetCountText();
       } else if (collision.gameObject.CompareTag("Seeker")) {
         loseTextObject.SetActive(true);
-        StartCoroutine(WaitAndLoadMenu());
-        SceneManager.LoadScene("Menu");
+        StartCoroutine(WaitAndLoadMenu(5));
     
-      } else if (collision.gameObject.CompareTag("Goal")) {
-        // win text
+      } else if (collision.gameObject.CompareTag("Goal") && count >= 16) {
         winTextObject.SetActive(true);
-        StartCoroutine(WaitAndLoadMenu());
+        StartCoroutine(WaitAndLoadMenu(5));
       }
     }
-    IEnumerator WaitAndLoadMenu()
+    IEnumerator WaitAndLoadMenu(int wait)
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(wait);
         SceneManager.LoadScene("Menu");
     }
     bool OutOfBounds()
     {
-      if (transform.position.y < -70 || transform.position.y < 70 || transform.position.x < -70 || transform.position.x > 70 || transform.position.z < -70 || transform.position.z > 70)
+      if (transform.position.y < -70 || transform.position.y > 70 || transform.position.x < -70 || transform.position.x > 70 || transform.position.z < -70 || transform.position.z > 70)
       {
         return true;
       }

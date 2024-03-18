@@ -43,7 +43,7 @@ public class AvoidWalls : MonoBehaviour
         {
             Debug.DrawLine(contact.point, Vector3.Normalize(transform.position - collision.transform.position) * speed, Color.white);
         }
-        if (collision.gameObject.CompareTag("Wall_H") || collision.gameObject.CompareTag("Wall_V"))
+        if (collision.gameObject.CompareTag("Wall_H") || collision.gameObject.CompareTag("Wall_V") || collision.gameObject.CompareTag("Goal"))
         {
             // repel from wall
             rb.velocity = Vector3.Normalize(transform.position - collision.transform.position) * speed;
