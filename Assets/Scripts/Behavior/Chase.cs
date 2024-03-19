@@ -25,7 +25,7 @@ public class Chase : MonoBehaviour
             //Debug.DrawLine(contact.point, Vector3.Normalize(transform.position - collision.transform.position) * speed, Color.white);
             if (collider.gameObject.Equals(target))
             {
-                finalDirection += Vector3.Normalize(collider.transform.position - transform.position) * speed;
+                finalDirection += Vector3.Normalize(collider.transform.position - transform.position) * speed ;
             }  
         }
         Debug.DrawRay(transform.position, finalDirection, Color.red);

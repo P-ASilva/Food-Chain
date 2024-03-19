@@ -49,7 +49,7 @@ public class AvoidWalls : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Wall_H") || collision.gameObject.CompareTag("Wall_V") || collision.gameObject.CompareTag("Goal"))
         {
-            rb.velocity = Vector3.Normalize(transform.position - collision.transform.position) * speed;
+            rb.velocity = Vector3.Normalize(transform.position - collision.transform.position) * speed*2;
         }
     } 
     
