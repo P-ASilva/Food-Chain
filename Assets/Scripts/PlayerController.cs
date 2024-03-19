@@ -7,6 +7,10 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {   
     private Rigidbody rb; 
+    public AudioSource audioSource;
+    public AudioSource pickupSound;
+    public AudioSource loseSound;
+    public AudioSource winSound;
     private float movementX;
     private float movementY;
     public float speed = 10; 
@@ -21,6 +25,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
       rb = GetComponent<Rigidbody>();
+      audioSource.Play();
       winTextObject.SetActive(false);
       loseTextObject.SetActive(false);
       SetCountText();
@@ -36,18 +41,16 @@ public class PlayerController : MonoBehaviour
     void SetCountText() 
    {
     countText.text =  "Score: " + count.ToString();
-    if (count >= 200)
-    {
-    winTextObject.SetActive(true);
-    }
    }
    void SetTimerText() {
     float minutes = Mathf.Floor(timeLeft / 60);
     float seconds = timeLeft%60;
-    if (seconds < 10) {
-      timerText.text = "Time: " + minutes.ToString() + ":0" + Mathf.RoundToInt(seconds);
+    if (seconds <= 10) {
+      timerText.text = "Time: " + minutes.ToString() + ":0" +Mathf.Floor(seconds);
+    } else if (timeLeft > 0){
+      timerText.text = "Time: " + minutes.ToString() + ":" + Mathf.Floor(seconds);
     } else {
-      timerText.text = "Time: " + minutes.ToString() + ":" + Mathf.RoundToInt(seconds);
+      timerText.text = "Time: 0:00";
     }
    }
 
@@ -65,8 +68,10 @@ public class PlayerController : MonoBehaviour
     {
       if (!winTextObject.activeSelf) {
         loseTextObject.SetActive(true);
+        audioSource.Stop();
+        loseSound.Play();
       }
-      StartCoroutine(WaitAndLoadMenu(5));
+      StartCoroutine(WaitAndLoadMenu(5,loseSound));
     }
    }
     void OnCollisionEnter(Collision collision)
@@ -78,21 +83,27 @@ public class PlayerController : MonoBehaviour
       if (collision.gameObject.CompareTag("PickUp"))
       {
         collision.gameObject.SetActive(false);
+        pickupSound.Play();
         count++;
         SetCountText();
-      } else if (collision.gameObject.CompareTag("Seeker")) {
+      } else if (collision.gameObject.CompareTag("Seeker") && !winTextObject.activeSelf) {
         loseTextObject.SetActive(true);
-        StartCoroutine(WaitAndLoadMenu(5));
+        audioSource.Stop();
+        loseSound.Play();
+        StartCoroutine(WaitAndLoadMenu(5,loseSound));
     
-      } else if (collision.gameObject.CompareTag("Goal") && count >= 16) {
+      } else if (collision.gameObject.CompareTag("Goal") && count >= 16 && !loseTextObject.activeSelf) {
         winTextObject.SetActive(true);
-        StartCoroutine(WaitAndLoadMenu(5));
+        audioSource.Stop();
+        winSound.Play();
+        StartCoroutine(WaitAndLoadMenu(5,winSound));
       }
     }
-    IEnumerator WaitAndLoadMenu(int wait)
+    IEnumerator WaitAndLoadMenu(int wait, AudioSource audio = null)
     {
         yield return new WaitForSeconds(wait);
         SceneManager.LoadScene("Menu");
+        audio.Stop();
     }
     bool OutOfBounds()
     {

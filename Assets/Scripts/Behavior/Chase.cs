@@ -6,6 +6,7 @@ public class Chase : MonoBehaviour
 {
     public GameObject target;
     private Rigidbody rb;
+    private Animator anim;
     public float speed = 0.5f;
     public float radius = 10.0f;
     private Vector3 offset;
@@ -30,5 +31,18 @@ public class Chase : MonoBehaviour
         Debug.DrawRay(transform.position, finalDirection, Color.red);
         print(finalDirection);
         rb.AddForce(Vector3.ClampMagnitude(finalDirection, speed));
+        //Animate(finalDirection);
     }    
+    
+    void Animate(Vector3 direction)
+    {
+        if (direction != Vector3.zero)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), 0.15f);
+            anim.SetInteger("Walk", 1);
+        }
+        else {
+            anim.SetInteger("Walk", 0);
+        }
+    }
 }
